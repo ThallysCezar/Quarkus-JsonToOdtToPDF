@@ -18,7 +18,7 @@ import java.util.Map;
 
 @ApplicationScoped
 public class OdtToPdfService {
-    public InputStream convertJsonToPdf(String json) throws IOException, XDocReportException {
+    public InputStream convertJsonToPdf(String json, String templateName) throws IOException, XDocReportException {
         JSONObject jsonObject = new JSONObject(json);
         Map<String, Object> data = new HashMap<>();
         data.put("name", jsonObject.getString("name"));
@@ -26,22 +26,22 @@ public class OdtToPdfService {
         data.put("location", jsonObject.getString("location"));
 
         // Carrega o template ODT
-        InputStream templateStream = getClass().getResourceAsStream("/template.odt");
+        InputStream templateStream = getClass().getResourceAsStream("/" + templateName + ".odt");
         if (templateStream == null) {
-            throw new FileNotFoundException("Template ODT não encontrado em /template.odt");
+            throw new FileNotFoundException("Template ODT não encontrado em: /" + templateName + ".odt");
         }
 
         // Carrega o documento
         IXDocReport report = XDocReportRegistry.getRegistry().loadReport(templateStream, TemplateEngineKind.Freemarker);
 
-        // Create fields metadata to set fields as simple text
+        // Criar metadados de campos para definir campos como texto simples
         FieldsMetadata metadata = new FieldsMetadata();
         metadata.addFieldAsTextStyling("name", DocumentKind.ODT.name());
         metadata.addFieldAsTextStyling("age", DocumentKind.ODT.name());
         metadata.addFieldAsTextStyling("location", DocumentKind.ODT.name());
         report.setFieldsMetadata(metadata);
 
-        // Create context and merge with template
+        // Criar contexto e mesclar com o modelo
         IContext context = report.createContext();
         context.putMap(data);
 

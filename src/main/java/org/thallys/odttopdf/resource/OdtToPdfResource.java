@@ -2,10 +2,7 @@ package org.thallys.odttopdf.resource;
 
 import fr.opensagres.xdocreport.core.XDocReportException;
 import jakarta.inject.Inject;
-import jakarta.ws.rs.Consumes;
-import jakarta.ws.rs.POST;
-import jakarta.ws.rs.Path;
-import jakarta.ws.rs.Produces;
+import jakarta.ws.rs.*;
 import jakarta.ws.rs.core.MediaType;
 import jakarta.ws.rs.core.Response;
 import org.thallys.odttopdf.service.OdtToPdfService;
@@ -23,8 +20,8 @@ public class OdtToPdfResource {
 
     @POST
     @Path("/odt-to-pdf")
-    public Response convertOdtToPdf(String json) {
-        try (InputStream pdfStream = odtToPdfService.convertJsonToPdf(json)) {
+    public Response convertOdtToPdf(@QueryParam("templateName") String templateName, String json) {
+        try (InputStream pdfStream = odtToPdfService.convertJsonToPdf(json, templateName)) {
             byte[] pdfBytes = pdfStream.readAllBytes();
             return Response.ok(pdfBytes)
                     .header("Content-Disposition", "attachment; filename=\"output.pdf\"")
