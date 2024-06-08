@@ -37,26 +37,26 @@ public class OdtToPdfService {
         if (templateName.equals("template_1.odt")) {
             // Dados do veículo
             LOG.info("Adicionando informacoes do template_1 JSON");
-            JSONObject parteVeiculo = new JSONObject("veiculo");
-            data.put("veiculo.nome", parteVeiculo.getString("nome"));
-            data.put("veiculo.marca", parteVeiculo.getString("marca"));
-            data.put("veiculo.anomodelo", parteVeiculo.getString("anomodelo"));
-            data.put("veiculo.km", parteVeiculo.getString("km"));
-            data.put("veiculo.datasaida", parteVeiculo.getString("datasaida"));
-            data.put("veiculo.combustivel", parteVeiculo.getString("combustivel"));
-            data.put("veiculo.categoria", parteVeiculo.getString("categoria"));
-            data.put("veiculo.chassi", parteVeiculo.getString("chassi"));
-            data.put("veiculo.placa", parteVeiculo.getString("placa"));
-            data.put("veiculo.proprietario", parteVeiculo.getString("proprietario"));
+//            JSONObject parteVeiculo = jsonObject.getJSONObject("veiculo");
+            data.put("veiculoNome", jsonObject.getString("veiculoNome"));
+            data.put("veiculoMarca", jsonObject.getString("veiculoMarca"));
+            data.put("veiculoAnoModelo", jsonObject.getString("veiculoAnoModelo"));
+            data.put("veiculoKm", jsonObject.getString("veiculoKm"));
+            data.put("veiculoDataSaida", jsonObject.getString("veiculoDataSaida"));
+            data.put("veiculoCombustivel", jsonObject.getString("veiculoCombustivel"));
+            data.put("veiculoCategoria", jsonObject.getString("veiculoCategoria"));
+            data.put("veiculoChassi", jsonObject.getString("veiculoChassi"));
+            data.put("veiculoPlaca", jsonObject.getString("veiculoPlaca"));
+            data.put("veiculoProprietario", jsonObject.getString("veiculoProprietario"));
         } else if (templateName.equals("template_2.odt")) {
             // Dados do seguro de vida
             LOG.info("Adicionando informacoes do template_2 JSON");
-            JSONObject parteVida = new JSONObject("segurovida");
-            data.put("segurovida.nome", parteVida.getString("nome"));
-            data.put("segurovida.idade", parteVida.getInt("idade"));
-            data.put("segurovida.valor", parteVida.getDouble("valor"));
-            data.put("segurovida.cobertura", parteVida.getString("cobertura"));
-            data.put("segurovida.beneficiarios", parteVida.getString("beneficiarios"));
+//            JSONObject parteVida = jsonObject.getJSONObject("segurovida");
+            data.put("seguroVidaNome", jsonObject.getString("seguroVidaNome"));
+            data.put("seguroVidaIdade", jsonObject.getString("seguroVidaIdade"));
+            data.put("seguroVidaValor", jsonObject.getString("seguroVidaValor"));
+            data.put("seguroVidaCobertura", jsonObject.getString("seguroVidaCobertura"));
+            data.put("seguroVidaBeneficiario", jsonObject.getString("seguroVidaBeneficiario"));
 
         }
 
@@ -86,64 +86,65 @@ public class OdtToPdfService {
 
     private void populateCommonData(Map<String, Object> data, JSONObject jsonObject) {
         // Dados comuns a ambos os templates
-        data.put("policynumber", jsonObject.getString("policynumber"));
+        data.put("policyNumber", jsonObject.getString("policyNumber"));
         data.put("produto", jsonObject.getString("produto"));
-        data.put("processosusep", jsonObject.getString("processosusep"));
-        data.put("codigoramo", jsonObject.getString("codigoramo"));
+        data.put("processoSusep", jsonObject.getString("processoSusep"));
+        data.put("codigoRamo", jsonObject.getString("codigoRamo"));
         data.put("proposta", jsonObject.getString("proposta"));
-        data.put("apolicerenovar", jsonObject.getString("apolicerenovar"));
+        data.put("apoliceRenovar", jsonObject.getString("apoliceRenovar"));
         data.put("endosso", jsonObject.getString("endosso"));
-        data.put("dataemissao", jsonObject.getString("dataemissao"));
-        data.put("vigenciaseguro", jsonObject.getString("vigenciaseguro"));
+        data.put("dataEmissao", jsonObject.getString("dataEmissao"));
+        data.put("vigenciaSeguro", jsonObject.getString("vigenciaSeguro"));
 
-        JSONObject parteSeguradora = new JSONObject("seguradora");
-        data.put("seguradora.cnpj", parteSeguradora.getString("seguradoracnpj"));
-        data.put("seguradora.codigosusep", parteSeguradora.getString("seguradoracodigosusep"));
-        data.put("seguradora.endereco", parteSeguradora.getString("seguradoraendereco"));
-        data.put("seguradora.celular", parteSeguradora.getString("seguradoracelular"));
+//        JSONObject parteSeguradora = jsonObject.getJSONObject("seguradora");
+//        System.out.println("Seguradora: " +  parteSeguradora);
+        data.put("seguradoraCnpj", jsonObject.getString("seguradoraCnpj"));
+        data.put("seguradoraCodigoSusep", jsonObject.getString("seguradoraCodigoSusep"));
+        data.put("seguradoraEndereco", jsonObject.getString("seguradoraEndereco"));
+        data.put("seguradoraCelular", jsonObject.getString("seguradoraCelular"));
 
-        JSONObject parteSegurado = new JSONObject("segurado");
-        data.put("segurado.nome", parteSegurado.getString("nome"));
-        data.put("segurado.cpfcnpj", parteSegurado.getString("cpfcnpj"));
-        data.put("segurado.datanascimento", parteSegurado.getString("datanascimento"));
-        data.put("segurado.sexo", parteSegurado.getString("sexo"));
-        data.put("segurado.profativ", parteSegurado.getString("profativ"));
-        data.put("segurado.salario", parteSegurado.getString("salario"));
-        data.put("segurado.endereco", parteSegurado.getString("endereco"));
-        data.put("segurado.numero", parteSegurado.getString("numero"));
-        data.put("segurado.comp", parteSegurado.getString("comp"));
-        data.put("segurado.bairro", parteSegurado.getString("bairro"));
-        data.put("segurado.cep", parteSegurado.getString("cep"));
-        data.put("segurado.cidade", parteSegurado.getString("cidade"));
-        data.put("segurado.estado", parteSegurado.getString("estado"));
-        data.put("segurado.telefone", parteSegurado.getString("telefone"));
-        data.put("segurado.celular", parteSegurado.getString("celular"));
-        data.put("segurado.email", parteSegurado.getString("email"));
+//        JSONObject parteSegurado = jsonObject.getJSONObject("segurado");
+        data.put("seguradoNome", jsonObject.getString("seguradoNome"));
+        data.put("seguradoCpfCnpj", jsonObject.getString("seguradoCpfCnpj"));
+        data.put("seguradoDataNascimento", jsonObject.getString("seguradoDataNascimento"));
+        data.put("seguradoSexo", jsonObject.getString("seguradoSexo"));
+        data.put("seguradoProfAtiv", jsonObject.getString("seguradoProfAtiv"));
+        data.put("seguradoSalario", jsonObject.getString("seguradoSalario"));
+        data.put("seguradoEndereco", jsonObject.getString("seguradoEndereco"));
+        data.put("seguradoNumero", jsonObject.getString("seguradoNumero"));
+        data.put("seguradoComp", jsonObject.getString("seguradoComp"));
+        data.put("seguradoBairro", jsonObject.getString("seguradoBairro"));
+        data.put("seguradoCep", jsonObject.getString("seguradoCep"));
+        data.put("seguradoCidade", jsonObject.getString("seguradoCidade"));
+        data.put("seguradoEstado", jsonObject.getString("seguradoEstado"));
+        data.put("seguradoTelefone", jsonObject.getString("seguradoTelefone"));
+        data.put("seguradoCelular", jsonObject.getString("seguradoCelular"));
+        data.put("seguradoEmail", jsonObject.getString("seguradoEmail"));
 
-        JSONObject partePagamento = new JSONObject("pagamento");
-        data.put("pagamento.premio", partePagamento.getString("premio"));
-        data.put("pagamento.custo", partePagamento.getString("custo"));
-        data.put("pagamento.juros", partePagamento.getString("juros"));
-        data.put("pagamento.iof", partePagamento.getString("iof"));
-        data.put("pagamento.premiototal", partePagamento.getString("premiototal"));
-        data.put("pagamento.formapagamento", partePagamento.getString("formapagamento"));
-        data.put("pagamento.parcelas", partePagamento.getString("parcelas"));
+//        JSONObject partePagamento = jsonObject.getJSONObject("pagamento");
+        data.put("pagamentoPremio", jsonObject.getString("pagamentoPremio"));
+        data.put("pagamentoCusto", jsonObject.getString("pagamentoCusto"));
+        data.put("pagamentoJuros", jsonObject.getString("pagamentoJuros"));
+        data.put("pagamentoIof", jsonObject.getString("pagamentoIof"));
+        data.put("pagamentoPremioTotal", jsonObject.getString("pagamentoPremioTotal"));
+        data.put("pagamentoFormaPagamento", jsonObject.getString("pagamentoFormaPagamento"));
+        data.put("pagamentoParcelas", jsonObject.getString("pagamentoParcelas"));
 
-        JSONObject parteCorretor = new JSONObject("corretor");
-        data.put("corretor.nome", parteCorretor.getString("nome"));
-        data.put("corretor.susep", parteCorretor.getString("susep"));
-        data.put("corretor.telefone", parteCorretor.getString("telefone"));
-        data.put("corretor.email", parteCorretor.getString("email"));
+//        JSONObject parteCorretor = jsonObject.getJSONObject("corretor");
+        data.put("corretorNome", jsonObject.getString("corretorNome"));
+        data.put("corretorSusep", jsonObject.getString("corretorSusep"));
+        data.put("corretorTelefone", jsonObject.getString("corretorTelefone"));
+        data.put("corretorEmail", jsonObject.getString("corretorEmail"));
 
-        data.put("coberturacontratadas", jsonObject.getString("coberturacontratadas"));
+        data.put("coberturaContratadas", jsonObject.getString("coberturaContratadas"));
         data.put("premio", jsonObject.getString("premio"));
-        data.put("capitalsegurado", jsonObject.getString("capitalsegurado"));
+        data.put("capitalSegurado", jsonObject.getString("capitalSegurado"));
 
         data.put("cobertura", jsonObject.getString("cobertura"));
         data.put("franquia", jsonObject.getString("franquia"));
-        data.put("tipofranquia", jsonObject.getString("tipofranquia"));
+        data.put("tipoFranquia", jsonObject.getString("tipoFranquia"));
 
-        data.put("assistenciacontratada", jsonObject.getString("assistenciacontratada"));
-        data.put("telefoneacionamento", jsonObject.getString("telefoneacionamento"));
+        data.put("assistenciaContratada", jsonObject.getString("assistenciaContratada"));
+        data.put("telefoneAcionamento", jsonObject.getString("telefoneAcionamento"));
     }
 }
