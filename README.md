@@ -1,66 +1,150 @@
-# code-with-quarkus-odttopdf
+# Convertendo arquivos JSON/ODTs para PDF com Java-Quarkus
 
-This project uses Quarkus, the Supersonic Subatomic Java Framework.
+Bem-vindo ao projeto!
+Este projeto foi desenvolvido para converter dados JSON em arquivos ODT e, em seguida, em PDF, utilizando Quarkus, FreeMarker e XDocReport. É uma aplicação prática que combina os conceitos de seguros com tecnologias modernas de desenvolvimento.
 
-If you want to learn more about Quarkus, please visit its website: https://quarkus.io/ .
+## Stack utilizada
 
-## Running the application in dev mode
+- **Back-end:** Quarkus, Framework Java para desenvolvimento de microsserviços eficientes e escaláveis.
+- **Bibliotecas**:
+    - **FreeMarker**: Ferramenta de template engine para Java.
+    - **XDocReport**: Biblioteca para gerar documentos no formato OpenDocument (ODT) e Microsoft Office (DOCX, PPTX).
 
-You can run your application in dev mode that enables live coding using:
-```shell script
-./mvnw compile quarkus:dev
-```
+## Funcionalidades
 
-> **_NOTE:_**  Quarkus now ships with a Dev UI, which is available in dev mode only at http://localhost:8080/q/dev/.
+- Conversão de dados JSON para arquivos ODT.
+- Conversão de arquivos ODT para PDF.
+- Configuração dinâmica de templates baseados em diferentes tipos de documentos de seguro.
 
-## Packaging and running the application
+## Como executar
+- Pré-requisitos:
+    - JDK 11+.
+    - Maven 3.6.3+.
+    - Docker.
+  ### Exemplos de JSONs para testar:
+    - template_1(Seguro Automóvel)
+  ```json
+  {
+	"policyNumber": "123456789",
+	"produto": "Seguro Automóvel",
+	"processoSusep": "987654",
+	"codigoRamo": "001",
+	"proposta": "789456",
+	"apoliceRenovar": "456789",
+	"endosso": "654321",
+	"dataEmissao": "2024-06-06",
+	"vigenciaSeguro": "2024-06/2025-06",
+	"seguradoraCnpj": "12345678000199",
+	"seguradoraCodigoSusep": "123456",
+	"seguradoraEndereco": "Rua Seguradora, 123",
+	"seguradoraCelular": "(11) 98765-4321",
+	"seguradoNome": "João Silva",
+	"seguradoCpfCnpj": "12345678901",
+	"seguradoDataNascimento": "1980-01-01",
+	"seguradoSexo": "Masculino",
+	"seguradoProfAtiv": "Engenheiro",
+	"seguradoSalario": "5000",
+	"seguradoEndereco": "Rua Segurado, 456",
+	"seguradoNumero": "456",
+	"seguradoComp": "Apto 101",
+	"seguradoBairro": "Bairro Seguro",
+	"seguradoCep": "12345-678",
+	"seguradoCidade": "São Paulo",
+	"seguradoEstado": "SP",
+	"seguradoTelefone": "(11) 1234-5678",
+	"seguradoCelular": "(11) 98765-4321",
+	"seguradoEmail": "joao.silva@example.com",
+	"veiculoNome": "Carro Modelo X",
+	"veiculoMarca": "Marca Y",
+	"veiculoAnoModelo": "2022",
+	"veiculoKm": "0",
+	"veiculoDataSaida": "2024-06-01",
+	"veiculoCombustivel": "Gasolina",
+	"veiculoCategoria": "Passeio",
+	"veiculoChassi": "9BWZZZ377VT004251",
+	"veiculoPlaca": "ABC-1234",
+	"veiculoProprietario": "João Silva",
+	"pagamentoPremio": "2000",
+	"pagamentoCusto": "50",
+	"pagamentoJuros": "20",
+	"pagamentoIof": "25",
+	"pagamentoPremioTotal": "2095",
+	"pagamentoFormaPagamento": "Cartão de Crédito",
+	"pagamentoParcelas": "12",
+	"corretorNome": "Corretor de Seguros",
+	"corretorSusep": "789456",
+	"corretorTelefone": "(11) 1234-5678",
+	"corretorEmail": "corretorexample.com",
+	"coberturaContratadas": "Cobertura Completa",
+	"premio": "2000",
+	"capitalSegurado": "50000",
+	"cobertura": "Colisão",
+	"franquia": "500",
+	"tipoFranquia": "Reduzida",
+	"assistenciaContratada": "Assistência 24h",
+	"telefoneAcionamento": "(11) 987654321"
+  }
+  ```
+- template_2(Segura Vida)
+  ```json
+  {
+	"policyNumber": "123456789",
+	"produto": "Seguro Automóvel",
+	"processoSusep": "987654",
+	"codigoRamo": "001",
+	"proposta": "789456",
+	"apoliceRenovar": "456789",
+	"endosso": "654321",
+	"dataEmissao": "2024-06-06",
+	"vigenciaSeguro": "2024-06/2025-06",
+	"seguradoraCnpj": "12345678000199",
+	"seguradoraCodigoSusep": "123456",
+	"seguradoraEndereco": "Rua Seguradora, 123",
+	"seguradoraCelular": "(11) 98765-4321",
+	"seguradoNome": "João Silva",
+	"seguradoCpfCnpj": "12345678901",
+	"seguradoDataNascimento": "1980-01-01",
+	"seguradoSexo": "Masculino",
+	"seguradoProfAtiv": "Engenheiro",
+	"seguradoSalario": "5000",
+	"seguradoEndereco": "Rua Segurado, 456",
+	"seguradoNumero": "456",
+	"seguradoComp": "Apto 101",
+	"seguradoBairro": "Bairro Seguro",
+	"seguradoCep": "12345-678",
+	"seguradoCidade": "São Paulo",
+	"seguradoEstado": "SP",
+	"seguradoTelefone": "(11) 1234-5678",
+	"seguradoCelular": "(11) 98765-4321",
+	"seguradoEmail": "joao.silva@example.com",
+	"seguroVidaNome": "Maria Souza",
+	"seguroVidaIdade": "49",
+	"seguroVidaValor": "100000",
+	"seguroVidaCobertura": "Cobertura Completa",
+	"seguroVidaBeneficiario": "João Souza",
+	"pagamentoPremio": "2000",
+	"pagamentoCusto": "50",
+	"pagamentoJuros": "20",
+	"pagamentoIof": "25",
+	"pagamentoPremioTotal": "2095",
+	"pagamentoFormaPagamento": "Cartão de Crédito",
+	"pagamentoParcelas": "12",
+	"corretorNome": "Corretor de Seguros",
+	"corretorSusep": "789456",
+	"corretorTelefone": "(11) 1234-5678",
+	"corretorEmail": "corretorexample.com",
+	"coberturaContratadas": "Cobertura Completa",
+	"premio": "2000",
+	"capitalSegurado": "50000",
+	"cobertura": "Colisão",
+	"franquia": "500",
+	"tipoFranquia": "Reduzida",
+	"assistenciaContratada": "Assistência 24h",
+	"telefoneAcionamento": "(11) 987654321"
+  }
+  ```
 
-The application can be packaged using:
-```shell script
-./mvnw package
-```
-It produces the `quarkus-run.jar` file in the `target/quarkus-app/` directory.
-Be aware that it’s not an _über-jar_ as the dependencies are copied into the `target/quarkus-app/lib/` directory.
+## Contribuindo
 
-The application is now runnable using `java -jar target/quarkus-app/quarkus-run.jar`.
-
-If you want to build an _über-jar_, execute the following command:
-```shell script
-./mvnw package -Dquarkus.package.jar.type=uber-jar
-```
-
-The application, packaged as an _über-jar_, is now runnable using `java -jar target/*-runner.jar`.
-
-## Creating a native executable
-
-You can create a native executable using: 
-```shell script
-./mvnw package -Dnative
-```
-
-Or, if you don't have GraalVM installed, you can run the native executable build in a container using: 
-```shell script
-./mvnw package -Dnative -Dquarkus.native.container-build=true
-```
-
-You can then execute your native executable with: `./target/code-with-quarkus-odttopdf-1.0.0-SNAPSHOT-runner`
-
-If you want to learn more about building native executables, please consult https://quarkus.io/guides/maven-tooling.
-
-## Related Guides
-
-- RESTEasy Classic ([guide](https://quarkus.io/guides/resteasy)): REST endpoint framework implementing Jakarta REST and more
-
-## Provided Code
-
-### RESTEasy JAX-RS
-
-Easily start your RESTful Web Services
-
-[Related guide section...](https://quarkus.io/guides/getting-started#the-jax-rs-resources)
-
-### RESTEasy Reactive
-
-Easily start your Reactive RESTful Web Services
-
-[Related guide section...](https://quarkus.io/guides/getting-started-reactive#reactive-jax-rs-resources)
+Contribuições são sempre bem-vindas!
+Sinta-se à vontade para modificar conforme necessário para se adequar ao seu projeto e estilo pessoal.
