@@ -29,11 +29,13 @@ public class OdtToPdfService {
 
         // Carrega o template ODT
         InputStream templateStream = getClass().getResourceAsStream("/" + templateName + ".odt");
+        LOG.info("TemplateStream: " + templateStream.toString());
+        LOG.info("TemplateString: " + templateName);
         if (templateStream == null) {
             throw new FileNotFoundException("Template ODT não encontrado em: /" + templateName + ".odt");
         }
 
-        if (templateName.equals("template_1.odt")) {
+        if (templateName.equals("template_1")) {
             // Dados do veículo
             LOG.info("Adicionando informacoes do template_1 JSON");
 //            JSONObject parteVeiculo = jsonObject.getJSONObject("veiculo");
@@ -47,7 +49,7 @@ public class OdtToPdfService {
             data.put("veiculoChassi", jsonObject.getString("veiculoChassi"));
             data.put("veiculoPlaca", jsonObject.getString("veiculoPlaca"));
             data.put("veiculoProprietario", jsonObject.getString("veiculoProprietario"));
-        } else if (templateName.equals("template_2.odt")) {
+        } else if (templateName.equals("template_2")) {
             // Dados do seguro de vida
             LOG.info("Adicionando informacoes do template_2 JSON");
 //            JSONObject parteVida = jsonObject.getJSONObject("segurovida");
