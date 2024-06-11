@@ -1,20 +1,16 @@
 package org.thallys.odttopdf.service;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
 import fr.opensagres.xdocreport.converter.ConverterTypeTo;
 import fr.opensagres.xdocreport.converter.Options;
 import fr.opensagres.xdocreport.core.XDocReportException;
-import fr.opensagres.xdocreport.core.document.DocumentKind;
 import fr.opensagres.xdocreport.document.IXDocReport;
 import fr.opensagres.xdocreport.document.json.JSONObject;
 import fr.opensagres.xdocreport.document.registry.XDocReportRegistry;
 import fr.opensagres.xdocreport.template.IContext;
 import fr.opensagres.xdocreport.template.TemplateEngineKind;
-import fr.opensagres.xdocreport.template.formatter.FieldsMetadata;
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Inject;
 import org.jboss.logging.Logger;
-import org.thallys.odttopdf.dto.*;
 import org.thallys.odttopdf.utils.PopulateDTOs;
 
 import java.io.*;
@@ -52,13 +48,6 @@ public class OdtToPdfService {
         // Carrega o documento
         IXDocReport report = XDocReportRegistry.getRegistry().loadReport(templateStream, TemplateEngineKind.Freemarker);
 
-        // Criar metadados de campos para definir campos como texto simples
-//        FieldsMetadata metadata = new FieldsMetadata();
-//        metadata.addFieldAsTextStyling("name", DocumentKind.ODT.name());
-//        metadata.addFieldAsTextStyling("age", DocumentKind.ODT.name());
-//        metadata.addFieldAsTextStyling("location", DocumentKind.ODT.name());
-//        report.setFieldsMetadata(metadata);
-
         // Criar contexto e mesclar com o modelo
         IContext context = report.createContext();
         context.putMap(data);
@@ -74,7 +63,7 @@ public class OdtToPdfService {
         return new ByteArrayInputStream(pdfOutputStream.toByteArray());
     }
 
-    private void populateCommonData(Map<String, Object> data, JSONObject jsonObject) {
+    public void populateCommonData(Map<String, Object> data, JSONObject jsonObject) {
         data.put("policyNumber", jsonObject.getString("policyNumber"));
         data.put("produto", jsonObject.getString("produto"));
         data.put("processoSusep", jsonObject.getString("processoSusep"));
