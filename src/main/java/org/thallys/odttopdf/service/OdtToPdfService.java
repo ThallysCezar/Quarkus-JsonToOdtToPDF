@@ -41,12 +41,10 @@ public class OdtToPdfService {
         }
 
         if (templateName.equals("template_1")) {
-            // Dados do veículo
             LOG.info("Adicionando informacoes do template_1 JSON");
             data.put("veiculo", populateDTOs.populateVeiculoDTO(jsonObject));
 
         } else if (templateName.equals("template_2")) {
-            // Dados do seguro de vida
             LOG.info("Adicionando informacoes do template_2 JSON");
             data.put("seguroVida", populateDTOs.populateSeguroVidaDTO(jsonObject));
         }
@@ -55,11 +53,11 @@ public class OdtToPdfService {
         IXDocReport report = XDocReportRegistry.getRegistry().loadReport(templateStream, TemplateEngineKind.Freemarker);
 
         // Criar metadados de campos para definir campos como texto simples
-        FieldsMetadata metadata = new FieldsMetadata();
-        metadata.addFieldAsTextStyling("name", DocumentKind.ODT.name());
-        metadata.addFieldAsTextStyling("age", DocumentKind.ODT.name());
-        metadata.addFieldAsTextStyling("location", DocumentKind.ODT.name());
-        report.setFieldsMetadata(metadata);
+//        FieldsMetadata metadata = new FieldsMetadata();
+//        metadata.addFieldAsTextStyling("name", DocumentKind.ODT.name());
+//        metadata.addFieldAsTextStyling("age", DocumentKind.ODT.name());
+//        metadata.addFieldAsTextStyling("location", DocumentKind.ODT.name());
+//        report.setFieldsMetadata(metadata);
 
         // Criar contexto e mesclar com o modelo
         IContext context = report.createContext();
@@ -72,14 +70,11 @@ public class OdtToPdfService {
         report.convert(context, options, pdfOutputStream);
 
         // Retorna o PDF como InputStream
+        LOG.info("Fase final, convertendo JSON para PDF, aguarde...");
         return new ByteArrayInputStream(pdfOutputStream.toByteArray());
     }
 
     private void populateCommonData(Map<String, Object> data, JSONObject jsonObject) {
-        SeguradoraDTO seguradoraDTO = new SeguradoraDTO();
-
-
-        // Dados comuns a ambos os templates
         data.put("policyNumber", jsonObject.getString("policyNumber"));
         data.put("produto", jsonObject.getString("produto"));
         data.put("processoSusep", jsonObject.getString("processoSusep"));
@@ -98,11 +93,9 @@ public class OdtToPdfService {
         data.put("coberturaContratadas", jsonObject.getString("coberturaContratadas"));
         data.put("premio", jsonObject.getString("premio"));
         data.put("capitalSegurado", jsonObject.getString("capitalSegurado"));
-
         data.put("cobertura", jsonObject.getString("cobertura"));
         data.put("franquia", jsonObject.getString("franquia"));
         data.put("tipoFranquia", jsonObject.getString("tipoFranquia"));
-
         data.put("assistenciaContratada", jsonObject.getString("assistenciaContratada"));
         data.put("telefoneAcionamento", jsonObject.getString("telefoneAcionamento"));
     }
